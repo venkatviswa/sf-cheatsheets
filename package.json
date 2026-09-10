@@ -1,0 +1,23 @@
+{
+  "name": "salesforce-cheatsheets",
+  "version": "0.1.0",
+  "description": "Beautiful, Salesforce-branded cheatsheets authored in Markdown and rendered to PNG/JPG.",
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "build:png": "node src/build.mjs --format png",
+    "build:jpg": "node src/build.mjs --format jpg",
+    "build:pdf": "node src/build.mjs --format pdf",
+    "build:all": "node src/build.mjs --format all",
+    "build:html": "node src/build.mjs --format html",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.10.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-attrs": "^4.3.1",
+    "markdown-it-highlightjs": "^4.2.0",
+    "puppeteer-core": "^23.0.0"
+  }
+}
