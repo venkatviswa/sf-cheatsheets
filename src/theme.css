@@ -23,7 +23,7 @@
   /* --- Accent ramp (per-cheatsheet, set on <body data-accent>) --- */
   --accent:      var(--sf-electric-50);
   --accent-deep: var(--sf-electric-20);
-  --accent-tint: #dae8ff;
+  --accent-tint: #c9daff;
 
   /* --- Fonts: proprietary SF fonts fall back to macOS system faces --- */
   --font-title: "Avant Garde Demi SFDC", "Century Gothic", "Futura", sans-serif;
@@ -36,12 +36,12 @@
 }
 
 /* Per-cheatsheet accent themes (set via data-accent on <body>) */
-body[data-accent="electric"] { --accent: #066AFE; --accent-deep: #002775; --accent-tint: #dae8ff; }
-body[data-accent="cloud"]    { --accent: #00B3FF; --accent-deep: #005b91; --accent-tint: #c9edfd; }
-body[data-accent="indigo"]   { --accent: #4B2CC0; --accent-deep: #2a137a; --accent-tint: #e4dafb; }
-body[data-accent="teal"]     { --accent: #0b8a8f; --accent-deep: #0a5b5e; --accent-tint: #cfeeee; }
-body[data-accent="violet"]   { --accent: #7526E3; --accent-deep: #4a127f; --accent-tint: #ecdafb; }
-body[data-accent="orange"]   { --accent: #D9822B; --accent-deep: #8a4c11; --accent-tint: #fbe6d0; }
+body[data-accent="electric"] { --accent: #066AFE; --accent-deep: #002775; --accent-tint: #c9daff; }
+body[data-accent="cloud"]    { --accent: #00B3FF; --accent-deep: #005b91; --accent-tint: #b8e3fb; }
+body[data-accent="indigo"]   { --accent: #4B2CC0; --accent-deep: #2a137a; --accent-tint: #d8c6f6; }
+body[data-accent="teal"]     { --accent: #0b8a8f; --accent-deep: #0a5b5e; --accent-tint: #b6e5e5; }
+body[data-accent="violet"]   { --accent: #7526E3; --accent-deep: #4a127f; --accent-tint: #dcc6f8; }
+body[data-accent="orange"]   { --accent: #D9822B; --accent-deep: #8a4c11; --accent-tint: #f7d8b4; }
 
 * { box-sizing: border-box; }
 
@@ -196,7 +196,7 @@ html, body {
   color: var(--accent-deep);
   padding: 2px 6px;
   border-radius: 6px;
-  border: 1px solid rgba(0, 39, 117, 0.12);
+  border: 1px solid rgba(0, 39, 117, 0.22);
 }
 .card pre {
   background: #0b1b3a;
@@ -218,14 +218,16 @@ html, body {
   word-break: break-word;
 }
 
-/* highlight.js tokens tuned to the SF palette on the dark code surface */
-.hljs-keyword, .hljs-selector-tag, .hljs-built_in { color: #7cc4ff; }
-.hljs-string, .hljs-attr { color: #8ff0c0; }
-.hljs-number, .hljs-literal { color: #ffc978; }
-.hljs-comment { color: #6b83a8; font-style: italic; }
-.hljs-title, .hljs-function .hljs-title, .hljs-title.function_ { color: #d7b3ff; }
-.hljs-type, .hljs-class .hljs-title { color: #ffd39b; }
-.hljs-meta, .hljs-symbol { color: #79b8ff; }
+/* highlight.js tokens tuned to the SF palette on the dark code surface.
+   Scoped to `pre` so the light-on-dark palette never bleeds onto the
+   light inline-code pills — inline code stays solid --accent-deep. */
+.card pre .hljs-keyword, .card pre .hljs-selector-tag, .card pre .hljs-built_in { color: #7cc4ff; }
+.card pre .hljs-string, .card pre .hljs-attr { color: #8ff0c0; }
+.card pre .hljs-number, .card pre .hljs-literal { color: #ffc978; }
+.card pre .hljs-comment { color: #6b83a8; font-style: italic; }
+.card pre .hljs-title, .card pre .hljs-function .hljs-title, .card pre .hljs-title.function_ { color: #d7b3ff; }
+.card pre .hljs-type, .card pre .hljs-class .hljs-title { color: #ffd39b; }
+.card pre .hljs-meta, .card pre .hljs-symbol { color: #79b8ff; }
 
 /* tables (great for limits / operator references) */
 .card table {
