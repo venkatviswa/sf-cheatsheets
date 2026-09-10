@@ -43,19 +43,11 @@ An **Agentforce** agent is an LLM-powered assistant that reasons over a request,
 
 ## Agent Script (.agent)
 
-```yaml
-subagent Order_Management:
-  description: "Look up and manage orders"
-  reasoning:
-    actions:
-      lookup_order: @actions.lookup_order
-  actions:
-    lookup_order:
-      description: "Look up orders"
-      target: "flow://GetOrdersByContact"
-```
+- The modern way to author agents: **`.agent`** files (**Agent Script**) packaged as **`AiAuthoringBundle`** metadata — **GA since Feb 2026**.
+- Indentation-based blocks — `system` / `config` / `variables` / `start_agent` / `subagent` — mixing `if/else` logic with `|` prompt lines.
+- Scaffold with `sf agent generate authoring-bundle`; `sf agent create` is the legacy path.
 
-- Indentation-based (YAML-like), authored in `AiAuthoringBundle` metadata.
+> Full syntax on the **Agent Script** cheatsheet.
 
 ## sf CLI
 

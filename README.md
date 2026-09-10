@@ -34,6 +34,10 @@ Click any poster for full resolution, or grab the print-ready PDF.
 [![Agentforce & AI cheatsheet](dist/agentforce.png)](dist/agentforce.png)
 📄 [Print PDF](dist/agentforce.pdf)
 
+### Agent Script
+[![Agent Script cheatsheet](dist/agent-script.png)](dist/agent-script.png)
+📄 [Print PDF](dist/agent-script.pdf)
+
 ### Salesforce CLI
 [![Salesforce CLI cheatsheet](dist/sf-cli.png)](dist/sf-cli.png)
 📄 [Print PDF](dist/sf-cli.pdf)
