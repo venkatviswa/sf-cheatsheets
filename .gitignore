@@ -1,4 +1,10 @@
 node_modules/
-dist/
+
+# Build artifacts: ship the rendered posters (PNG) and print-ready PDFs,
+# but keep the intermediate HTML preview and alternate JPG exports local.
+dist/*
+!dist/*.png
+!dist/*.pdf
+
 *.log
 .DS_Store
