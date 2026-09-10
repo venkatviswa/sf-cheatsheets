@@ -2,7 +2,7 @@
 title: Agent Script
 subtitle: The .agent DSL for authoring Agentforce agents in Agentforce DX.
 category: Agentforce
-accent: orange
+accent: teal
 columns: 3
 footer: Agent Script (.agent) quick reference
 ---

@@ -2,7 +2,7 @@
 title: Flow & Automation
 subtitle: Declarative process automation with Salesforce Flow — types, elements, and best practices.
 category: Automation
-accent: teal
+accent: cloud
 columns: 3
 footer: Salesforce Flow quick reference
 ---

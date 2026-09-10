@@ -2,7 +2,7 @@
 title: Apex Essentials
 subtitle: The server-side language of the Salesforce Platform — syntax, DML, triggers, and governor limits.
 category: Development
-accent: indigo
+accent: teal
 columns: 3
 footer: Apex programming quick reference
 ---

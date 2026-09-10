@@ -23,7 +23,7 @@
   /* --- Accent ramp (per-cheatsheet, set on <body data-accent>) --- */
   --accent:      var(--sf-electric-50);
   --accent-deep: var(--sf-electric-20);
-  --accent-tint: #eaf2ff;
+  --accent-tint: #dae8ff;
 
   /* --- Fonts: proprietary SF fonts fall back to macOS system faces --- */
   --font-title: "Avant Garde Demi SFDC", "Century Gothic", "Futura", sans-serif;
@@ -36,12 +36,12 @@
 }
 
 /* Per-cheatsheet accent themes (set via data-accent on <body>) */
-body[data-accent="electric"] { --accent: #066AFE; --accent-deep: #002775; --accent-tint: #eaf2ff; }
-body[data-accent="cloud"]    { --accent: #00B3FF; --accent-deep: #005b91; --accent-tint: #e3f6ff; }
-body[data-accent="indigo"]   { --accent: #4B2CC0; --accent-deep: #2a137a; --accent-tint: #efeaff; }
-body[data-accent="teal"]     { --accent: #0b8a8f; --accent-deep: #0a5b5e; --accent-tint: #e2f6f6; }
-body[data-accent="violet"]   { --accent: #7526E3; --accent-deep: #4a127f; --accent-tint: #f3eafd; }
-body[data-accent="orange"]   { --accent: #D9822B; --accent-deep: #8a4c11; --accent-tint: #fdf0e2; }
+body[data-accent="electric"] { --accent: #066AFE; --accent-deep: #002775; --accent-tint: #dae8ff; }
+body[data-accent="cloud"]    { --accent: #00B3FF; --accent-deep: #005b91; --accent-tint: #c9edfd; }
+body[data-accent="indigo"]   { --accent: #4B2CC0; --accent-deep: #2a137a; --accent-tint: #e4dafb; }
+body[data-accent="teal"]     { --accent: #0b8a8f; --accent-deep: #0a5b5e; --accent-tint: #cfeeee; }
+body[data-accent="violet"]   { --accent: #7526E3; --accent-deep: #4a127f; --accent-tint: #ecdafb; }
+body[data-accent="orange"]   { --accent: #D9822B; --accent-deep: #8a4c11; --accent-tint: #fbe6d0; }
 
 * { box-sizing: border-box; }
 
@@ -196,6 +196,7 @@ html, body {
   color: var(--accent-deep);
   padding: 2px 6px;
   border-radius: 6px;
+  border: 1px solid rgba(0, 39, 117, 0.12);
 }
 .card pre {
   background: #0b1b3a;
@@ -209,6 +210,7 @@ html, body {
   background: none;
   color: #e7edf7;
   padding: 0;
+  border: none;
   font-size: 13px;
   line-height: 1.55;
   display: block;
