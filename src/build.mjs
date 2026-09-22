@@ -30,6 +30,8 @@ import hljs from "highlight.js";
 // closest bundled grammar so Apex / SOQL fences still get colorized.
 hljs.registerAliases(["apex", "cls"], { languageName: "java" });
 hljs.registerAliases(["soql", "sosl"], { languageName: "sql" });
+// git/ssh config files share INI-ish section/key syntax — reuse the ini grammar.
+hljs.registerAliases(["gitconfig", "sshconfig"], { languageName: "ini" });
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
