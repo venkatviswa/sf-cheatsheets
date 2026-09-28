@@ -1,7 +1,10 @@
 {
   "name": "salesforce-cheatsheets",
   "version": "0.1.0",
-  "description": "Beautiful, Salesforce-branded cheatsheets authored in Markdown and rendered to PNG/JPG.",
+  "description": "Beautiful, Salesforce-branded cheatsheets authored in Markdown and rendered to PNG, JPG, and print-ready PDF.",
+  "engines": {
+    "node": ">=18"
+  },
   "type": "module",
   "scripts": {
     "build": "node src/build.mjs",

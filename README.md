@@ -1,102 +1,117 @@
 # Salesforce Cheatsheets
 
-Beautiful, Salesforce-branded quick-reference cheatsheets for the Salesforce
-ecosystem. Author in **Markdown**, render to crisp **PNG / JPG** images and a
-print-ready **PDF**.
+Salesforce-branded quick-reference posters for the Salesforce ecosystem.
+Write them in **Markdown**, then render them to high-resolution **PNG** images
+and print-ready single-page **PDFs**.
 
-![Development](https://img.shields.io/badge/Salesforce-Cheatsheets-00B3FF)
+![Salesforce Cheatsheets](https://img.shields.io/badge/Salesforce-Cheatsheets-00B3FF)
 
 ## Cheatsheets
 
-Click any poster for full resolution, or grab the print-ready PDF.
+Click a poster to see it at full resolution, or use the PDF link to print it.
 
-### SOQL & SOSL
-[![SOQL & SOSL cheatsheet](dist/soql-sosl.png)](dist/soql-sosl.png)
-📄 [Print PDF](dist/soql-sosl.pdf)
-
-### Apex Basics
-[![Apex Basics cheatsheet](dist/apex-basics.png)](dist/apex-basics.png)
-📄 [Print PDF](dist/apex-basics.pdf)
-
-### Lightning Web Components
-[![Lightning Web Components cheatsheet](dist/lwc.png)](dist/lwc.png)
-📄 [Print PDF](dist/lwc.pdf)
-
-### Flow & Automation
-[![Flow & Automation cheatsheet](dist/flow-automation.png)](dist/flow-automation.png)
-📄 [Print PDF](dist/flow-automation.pdf)
-
-### Security & Sharing
-[![Security & Sharing cheatsheet](dist/security-sharing.png)](dist/security-sharing.png)
-📄 [Print PDF](dist/security-sharing.pdf)
-
-### Agentforce & AI
-[![Agentforce & AI cheatsheet](dist/agentforce.png)](dist/agentforce.png)
-📄 [Print PDF](dist/agentforce.pdf)
-
-### Agent Script
-[![Agent Script cheatsheet](dist/agent-script.png)](dist/agent-script.png)
-📄 [Print PDF](dist/agent-script.pdf)
-
-### Salesforce CLI
-[![Salesforce CLI cheatsheet](dist/sf-cli.png)](dist/sf-cli.png)
-📄 [Print PDF](dist/sf-cli.pdf)
+<table>
+  <tr>
+    <td align="center" valign="top" width="33%">
+      <a href="dist/soql-sosl.png"><img src="dist/soql-sosl.png" alt="SOQL & SOSL cheatsheet"></a><br>
+      <b>SOQL &amp; SOSL</b><br><a href="dist/soql-sosl.pdf">PDF</a>
+    </td>
+    <td align="center" valign="top" width="33%">
+      <a href="dist/apex-basics.png"><img src="dist/apex-basics.png" alt="Apex Essentials cheatsheet"></a><br>
+      <b>Apex Essentials</b><br><a href="dist/apex-basics.pdf">PDF</a>
+    </td>
+    <td align="center" valign="top" width="33%">
+      <a href="dist/lwc.png"><img src="dist/lwc.png" alt="Lightning Web Components cheatsheet"></a><br>
+      <b>Lightning Web Components</b><br><a href="dist/lwc.pdf">PDF</a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <a href="dist/flow-automation.png"><img src="dist/flow-automation.png" alt="Flow & Automation cheatsheet"></a><br>
+      <b>Flow &amp; Automation</b><br><a href="dist/flow-automation.pdf">PDF</a>
+    </td>
+    <td align="center" valign="top">
+      <a href="dist/security-sharing.png"><img src="dist/security-sharing.png" alt="Security & Sharing cheatsheet"></a><br>
+      <b>Security &amp; Sharing</b><br><a href="dist/security-sharing.pdf">PDF</a>
+    </td>
+    <td align="center" valign="top">
+      <a href="dist/agentforce.png"><img src="dist/agentforce.png" alt="Agentforce & AI cheatsheet"></a><br>
+      <b>Agentforce &amp; AI</b><br><a href="dist/agentforce.pdf">PDF</a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <a href="dist/agent-script.png"><img src="dist/agent-script.png" alt="Agent Script cheatsheet"></a><br>
+      <b>Agent Script</b><br><a href="dist/agent-script.pdf">PDF</a>
+    </td>
+    <td align="center" valign="top">
+      <a href="dist/sf-cli.png"><img src="dist/sf-cli.png" alt="Salesforce CLI cheatsheet"></a><br>
+      <b>Salesforce CLI</b><br><a href="dist/sf-cli.pdf">PDF</a>
+    </td>
+    <td align="center" valign="top">
+      <a href="dist/git-github.png"><img src="dist/git-github.png" alt="Git & GitHub CLI cheatsheet"></a><br>
+      <b>Git &amp; GitHub CLI</b><br><a href="dist/git-github.pdf">PDF</a>
+    </td>
+  </tr>
+</table>
 
 ## How it works
 
 ```
-content/<topic>.md   →   Salesforce-branded HTML   →   dist/<topic>.png · .jpg · .pdf
+content/<slug>.md  →  branded HTML  →  headless Chrome  →  dist/<slug>.png · .pdf
 ```
 
-Each Markdown file is one cheatsheet. Every `##` section becomes a **card** in a
-balanced multi-column poster, styled with the official Salesforce color tokens
-and typography. A headless Chrome renders the HTML to a high-resolution image
-(2× device scale).
+Each Markdown file is one cheatsheet, and each `##` section becomes a **card**.
+The cards flow into balanced CSS columns styled with the Salesforce color
+tokens. Headless Chrome then captures the page at 2× scale for the PNG and
+prints it as a single page sized to the poster for the PDF (no A4 page breaks).
 
 ## Quick start
 
-```bash
-npm install            # one-time
-npm run build          # render every content/*.md to dist/*.png + *.pdf
-```
+Requires **Node 18+** and a Chromium-based browser (Chrome, Edge, or Chromium).
 
-Then open the files in `dist/`.
+```bash
+npm install     # one-time
+npm run build   # render every content/*.md to dist/*.png + *.pdf
+```
 
 ## Commands
 
-| Command | What it does |
-|---------|--------------|
-| `npm run build` | Render all sheets to **PNG + PDF** (+ HTML preview) |
-| `npm run build:all` | PNG **and** JPG **and** PDF |
-| `npm run build:jpg` | JPG only |
-| `npm run build:pdf` | Print-ready PDF only |
-| `npm run build:html` | HTML only — fast, no Chrome needed |
-| `node src/build.mjs soql-sosl` | Build a single sheet by its slug |
-| `npm run clean` | Delete `dist/` |
+| Command | Output |
+|---------|--------|
+| `npm run build` | PNG + PDF for every sheet (plus an HTML preview) |
+| `npm run build:all` | PNG + JPG + PDF |
+| `npm run build:png` / `build:jpg` / `build:pdf` | One format only |
+| `npm run build:html` | HTML only: a fast preview that doesn't need Chrome |
+| `node src/build.mjs <slug>` | One sheet, e.g. `node src/build.mjs soql-sosl` |
+| `npm run clean` | Deletes `dist/` |
 
-The PDF is a single page sized exactly to the poster (no A4 pagination).
+The build looks for Chrome first in `CHROME_PATH`, then in the standard macOS
+and Linux install locations. Set `CHROME_PATH` if your browser is installed
+somewhere else.
 
 ## Authoring a cheatsheet
 
-Create `content/my-topic.md` with front-matter, then write `##` sections:
+Create `content/<slug>.md`:
 
-```markdown
+````markdown
 ---
 title: My Topic
-subtitle: One-line description shown under the title.
-category: Development        # chip in the top-right
-accent: electric             # electric | cloud | indigo | teal | violet | orange
-columns: 3                   # 1–4 columns
+subtitle: One line under the title — inline `code` and **bold** work.
+category: Development      # chip in the top-right corner
+accent: electric           # electric | cloud | indigo | teal | violet | orange
+columns: 3                 # 1–4
 footer: Optional footer text
+updated: "2026-09-22"      # optional; defaults to the file's last commit date
 ---
 
 ## First Card
 
-- Bullet points, **bold**, `inline code`.
+- Bullets, **bold**, `inline code`.
 
-​```apex
-System.debug('code blocks are syntax-highlighted');
-​```
+```apex
+System.debug('fenced code is syntax-highlighted');
+```
 
 ## Second Card
 
@@ -104,17 +119,27 @@ System.debug('code blocks are syntax-highlighted');
 |-----|-----|
 | a   | b   |
 
-> Blockquotes render as accent "tip" callouts.
-```
+> Blockquotes render as accent-colored tip callouts.
+````
 
 **Conventions**
-- `##` = a card title. `###` = a subhead inside a card. Text before the first
-  `##` is ignored on the poster.
-- Keep cards focused; more small cards balance the columns better than a few
-  huge ones.
-- Use fenced code with a language (`apex`, `soql`, `bash`, `sql`, `xml`, `js`).
 
-## Requirements
+- `##` starts a card and `###` adds a subhead inside it. Anything before the
+  first `##` is left off the poster.
+- Several small cards balance the columns better than a few tall ones. If one
+  column runs long, split its largest section.
+- Tag code fences with a language: `apex`, `soql`, `sosl`, `bash`, `sql`,
+  `xml`, `js`, `html`, `json`, `yaml`, `gitconfig`.
+- Use a different accent from the sheets next to it in the gallery so the
+  thumbnails are easy to tell apart.
 
-- Node 18+ and a Chromium-based browser (Chrome, Edge, or Chromium).
-  Set `CHROME_PATH` if it isn't at the default macOS location.
+**Publishing a new sheet**
+
+1. Run `node src/build.mjs <slug>` and open `dist/<slug>.png` to check it.
+2. Add the sheet to the gallery table above.
+3. Commit the `.md` file together with `dist/<slug>.png` and `dist/<slug>.pdf`.
+   Only PNGs and PDFs are tracked; the HTML and JPG output stays local.
+
+Chrome's anti-aliasing isn't byte-for-byte deterministic, so rebuilding a sheet
+you didn't change still modifies its PNG and PDF. Commit only the posters whose
+content you changed.

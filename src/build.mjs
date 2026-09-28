@@ -2,22 +2,24 @@
 /**
  * Salesforce Cheatsheet builder.
  *
- * Pipeline:  content/<name>.md  ->  Salesforce-branded HTML  ->  PNG / JPG
+ * Pipeline:  content/<name>.md  ->  Salesforce-branded HTML  ->  PNG / JPG / PDF
  *
  * Each `##` section in a Markdown file becomes one card in a balanced
  * multi-column poster. Front-matter controls title, subtitle, category,
  * accent color and column count.
  *
  * Usage:
- *   node src/build.mjs                 # build every content/*.md to PNG
- *   node src/build.mjs --format jpg    # emit JPG instead
+ *   node src/build.mjs                 # build every content/*.md to PNG + PDF
+ *   node src/build.mjs --format all    # PNG + JPG + PDF
  *   node src/build.mjs --format both   # PNG + JPG
+ *   node src/build.mjs --format jpg    # a single format: png | jpg | pdf | html
  *   node src/build.mjs --format html   # HTML only (fast preview, no Chrome)
  *   node src/build.mjs soql-sosl       # build a single sheet by slug
  */
 
 import { readFile, readdir, writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
@@ -53,6 +55,12 @@ const FORMAT_SETS = {
   both: ["png", "jpg"],
 };
 const FORMATS = FORMAT_SETS[formatArg] || [formatArg]; // png | jpg | pdf | html
+const KNOWN_FORMATS = ["png", "jpg", "pdf", "html"];
+const unknown = FORMATS.filter((f) => !KNOWN_FORMATS.includes(f));
+if (unknown.length) {
+  console.error(`Unknown --format "${formatArg}". Use one of: ${[...Object.keys(FORMAT_SETS), ...KNOWN_FORMATS].join(", ")}.`);
+  process.exit(1);
+}
 
 // Column count -> render width (px). Balanced for legibility at 2x scale.
 const WIDTH_BY_COLS = { 1: 720, 2: 1080, 3: 1440, 4: 1860 };
@@ -94,13 +102,32 @@ function renderCard(sectionMd) {
 
 const SF_CLOUD_SVG = `<svg class="cloud" viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Salesforce cloud"><path fill="#00B3FF" d="M41 14c4-6 11-10 19-10 10 0 19 6 23 15 2-1 5-1 7-1 11 0 20 9 20 20s-9 20-20 20H27C16 58 7 49 7 38c0-9 6-17 15-19-1-8 6-15 14-15 2 0 4 0 5 1z"/></svg>`;
 
-function pageHTML({ data, cardsHtml, theme }) {
+/**
+ * "Updated" stamp: front-matter `updated`, else the content file's last git
+ * commit date, else today. Using the commit date keeps rebuilds of unchanged
+ * sheets byte-stable instead of re-stamping every poster with the build day.
+ */
+function updatedDate(data, file) {
+  // YAML parses an unquoted 2026-09-22 into a Date object.
+  if (data.updated instanceof Date) return data.updated.toISOString().slice(0, 10);
+  if (data.updated) return String(data.updated);
+  try {
+    const d = execFileSync("git", ["log", "-1", "--format=%cs", "--", file], { cwd: ROOT, encoding: "utf8" }).trim();
+    if (d) return d;
+  } catch {
+    // not a git checkout — fall through
+  }
+  return new Date().toISOString().slice(0, 10);
+}
+
+function pageHTML({ data, cardsHtml, theme, updated }) {
   const cols = String(data.columns || 3);
   const width = WIDTH_BY_COLS[cols] || WIDTH_BY_COLS[3];
   const accent = data.accent || "electric";
-  const updated = data.updated || new Date().toISOString().slice(0, 10);
   const category = data.category ? `<div class="category-chip">${data.category}</div>` : "";
-  const subtitle = data.subtitle ? `<p class="sheet-subtitle">${data.subtitle}</p>` : "";
+  // Subtitle and footer accept inline Markdown (e.g. `code`, **bold**).
+  const subtitle = data.subtitle ? `<p class="sheet-subtitle">${md.renderInline(data.subtitle)}</p>` : "";
+  const footer = md.renderInline(data.footer || "Salesforce ecosystem quick reference");
 
   return `<!doctype html>
 <html lang="en">
@@ -125,7 +152,7 @@ function pageHTML({ data, cardsHtml, theme }) {
       ${cardsHtml}
     </div>
     <footer class="sheet-footer">
-      <span>${data.footer || "Salesforce ecosystem quick reference"}</span>
+      <span>${footer}</span>
       <span class="updated">Updated ${updated}</span>
     </footer>
   </div>
@@ -140,6 +167,10 @@ function findChrome() {
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     "/Applications/Chromium.app/Contents/MacOS/Chromium",
     "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+    "/usr/bin/microsoft-edge",
   ].filter(Boolean);
   return candidates.find((p) => existsSync(p));
 }
@@ -163,7 +194,8 @@ async function main() {
     const raw = await readFile(path.join(CONTENT_DIR, file), "utf8");
     const { data, content } = matter(raw);
     const cardsHtml = splitCards(content).map(renderCard).join("\n");
-    const html = pageHTML({ data, cardsHtml, theme });
+    const updated = updatedDate(data, path.join("content", file));
+    const html = pageHTML({ data, cardsHtml, theme, updated });
     const htmlPath = path.join(DIST_DIR, `${slug}.html`);
     await writeFile(htmlPath, html);
     built.push({ slug, html, htmlPath, data });

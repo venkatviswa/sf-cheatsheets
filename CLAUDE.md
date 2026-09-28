@@ -14,6 +14,7 @@ project is a small Node.js build pipeline plus Markdown content.
 npm install                          # install deps (one-time)
 npm run build                        # render all content/*.md -> dist/*.png + *.pdf (+ .html)
 npm run build:all                    # PNG + JPG + PDF
+npm run build:png                    # PNG only
 npm run build:jpg                    # JPG only
 npm run build:pdf                    # print-ready single-page PDF only
 npm run build:html                   # HTML only — fast preview, skips Chrome
@@ -22,7 +23,8 @@ npm run clean                        # rm -rf dist
 ```
 
 Format sets live in `FORMAT_SETS` in `build.mjs` (`default` = png+pdf, `all`,
-`both`); any other `--format` value is treated as a single format. The PDF path
+`both`); `png`/`jpg`/`pdf`/`html` select a single format, and anything else
+exits with an error. The PDF path
 uses `page.pdf()` sized to the measured `.sheet` box for a single-page poster;
 PNG/JPG use a full-page screenshot at 2× scale.
 
@@ -53,6 +55,10 @@ Pipeline: `content/<slug>.md` → HTML (branded card grid) → screenshot → `d
 - **Front-matter drives layout**: `title`, `subtitle`, `category` (top-right
   chip), `accent`, `columns` (1–4), `footer`, `updated`. Column count maps to a
   fixed render width in `WIDTH_BY_COLS` — widening columns means editing that map.
+  `subtitle` and `footer` go through `md.renderInline`, so inline Markdown works.
+- **`updated` date**: `updatedDate()` uses front-matter if set, else the content
+  file's last git commit date, else today. Quote it in YAML (`"2026-09-22"`) or
+  gray-matter hands back a `Date` (handled, but quoting is clearer).
 - **Accent themes** are a closed set defined in `theme.css`
   (`electric`, `cloud`, `indigo`, `teal`, `violet`, `orange`). Adding a color
   means adding a `body[data-accent="…"]` rule, not inline styles.
@@ -60,12 +66,17 @@ Pipeline: `content/<slug>.md` → HTML (branded card grid) → screenshot → `d
   and not installed; the theme intentionally falls back to Futura/Helvetica Neue.
   Do not add remote web-font fetches — rendering must work offline.
 - **Apex/SOQL aren't native highlight.js grammars.** `build.mjs` aliases
-  `apex`→`java` and `soql`/`sosl`→`sql`. Add new language aliases there, next to
+  `apex`→`java` and `soql`/`sosl`→`sql` (plus `cls`→`java`, `gitconfig`/`sshconfig`→`ini`). Add new language aliases there, next to
   the existing `hljs.registerAliases` calls, rather than switching highlighters.
 - **Chrome discovery**: `findChrome()` checks `CHROME_PATH` then common macOS
-  paths. Set `CHROME_PATH` when Chrome/Edge/Chromium lives elsewhere.
+  and Linux paths. Set `CHROME_PATH` when Chrome/Edge/Chromium lives elsewhere.
 - Column **balance** is best when a sheet has many small cards rather than a few
   tall ones; if one column runs long, split large `##` sections.
+- **`dist/` is partly committed**: `.gitignore` tracks `dist/*.png` and
+  `dist/*.pdf` (the README gallery embeds them); HTML/JPG stay local. Rendering
+  is not byte-deterministic, so a full rebuild dirties every poster — commit
+  only the posters whose content changed and `git checkout` the rest.
+- **Adding a sheet** also means adding it to the gallery table in `README.md`.
 
 ## Brand rules (from the salesforce-html-presentation skill)
 

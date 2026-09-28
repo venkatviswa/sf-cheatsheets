@@ -108,6 +108,15 @@ html, body {
   margin: 12px 0 0;
   max-width: 60ch;
 }
+.sheet-subtitle code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  padding: 1px 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 39, 117, 0.22);
+}
 
 .category-chip {
   justify-self: end;
